@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "s1AvSecG2n6CJXEPwVSUt98YvG/Sgsnzgx5xV/68Vkt15HFM/XLtJwujUnZiRlBVuuJz5s1TOG0jyYe29r/gMA==",
+  "dgSpecHash": "VWXqWHeVEduC+Em2IbdcYUBDTKD0gUY/5IPcLLTEH9k9NjovE6iu/Xjar5Ey2qyXLFr5PvoVG1UaXcxoeskybg==",
   "success": true,
   "projectFilePath": "C:\\Users\\matia\\Desktop\\TP-GSC\\Backend\\Backend.API\\Backend.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\matia\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\matia\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\matia\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\matia\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.14\\microsoft.aspnetcore.authentication.jwtbearer.7.0.14.nupkg.sha512",
     "C:\\Users\\matia\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.11\\microsoft.aspnetcore.openapi.7.0.11.nupkg.sha512",
     "C:\\Users\\matia\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\matia\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

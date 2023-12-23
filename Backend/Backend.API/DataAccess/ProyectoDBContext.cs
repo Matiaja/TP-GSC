@@ -12,16 +12,17 @@ namespace Backend.API.DataAccess
         public DbSet<Cosa> Cosas { get; set; }
         public DbSet<Prestamo> Prestamos { get; set; }
 
-        public ProyectoDBContext()
+        public ProyectoDBContext(DbContextOptions options) : base(options)
         {
             this.Database.EnsureCreated();
         }
 
+        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocaldb;Database=PrestamosDb;Integrated Security=True;");
+            //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocaldb;Database=PrestamosDb;Integrated Security=True;");
         }
-
+        */
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Persona>(p =>
@@ -34,7 +35,15 @@ namespace Backend.API.DataAccess
             {
                 u.HasKey(u => u.NombreUsuario);
                 u.Property(u => u.NombreUsuario).ValueGeneratedNever();
+
+                u.HasData(
+                    new Usuario()
+                    {
+                        NombreUsuario = "Admin",
+                        Clave = "1234",
+                    });
             });
+
         }
     }
 }
