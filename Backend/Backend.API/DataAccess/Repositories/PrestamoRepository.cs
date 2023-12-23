@@ -1,6 +1,11 @@
-﻿namespace Backend.API.DataAccess.Repositories
+﻿using Backend.API.Domain;
+
+namespace Backend.API.DataAccess.Repositories
 {
-    public class PrestamoRepository
+    public class PrestamoRepository : Repository<Prestamo>
     {
+        public PrestamoRepository(ProyectoDBContext dbContext) : base(dbContext)
+        {
+        }
     }
 }

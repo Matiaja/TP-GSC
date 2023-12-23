@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/NVEFYLW3895ZPOc/Sf/Z/q4ODUyjnrze5fPD4Og9sOxacoz18riPReyUAksV2Faqz/mhts1r1ML1WW0q6c+vw==",
+  "dgSpecHash": "s1AvSecG2n6CJXEPwVSUt98YvG/Sgsnzgx5xV/68Vkt15HFM/XLtJwujUnZiRlBVuuJz5s1TOG0jyYe29r/gMA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\matia\\Desktop\\TP - GSC\\Backend\\Backend.API\\Backend.API.csproj",
+  "projectFilePath": "C:\\Users\\matia\\Desktop\\TP-GSC\\Backend\\Backend.API\\Backend.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\matia\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\matia\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

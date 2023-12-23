@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\matia\\Desktop\\TP - GSC\\Backend\\Backend.API\\Backend.API.csproj": {}
+    "C:\\Users\\matia\\Desktop\\TP-GSC\\Backend\\Backend.API\\Backend.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\matia\\Desktop\\TP - GSC\\Backend\\Backend.API\\Backend.API.csproj": {
+    "C:\\Users\\matia\\Desktop\\TP-GSC\\Backend\\Backend.API\\Backend.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matia\\Desktop\\TP - GSC\\Backend\\Backend.API\\Backend.API.csproj",
+        "projectUniqueName": "C:\\Users\\matia\\Desktop\\TP-GSC\\Backend\\Backend.API\\Backend.API.csproj",
         "projectName": "Backend.API",
-        "projectPath": "C:\\Users\\matia\\Desktop\\TP - GSC\\Backend\\Backend.API\\Backend.API.csproj",
+        "projectPath": "C:\\Users\\matia\\Desktop\\TP-GSC\\Backend\\Backend.API\\Backend.API.csproj",
         "packagesPath": "C:\\Users\\matia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matia\\Desktop\\TP - GSC\\Backend\\Backend.API\\obj\\",
+        "outputPath": "C:\\Users\\matia\\Desktop\\TP-GSC\\Backend\\Backend.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\matia\\AppData\\Roaming\\NuGet\\NuGet.Config",

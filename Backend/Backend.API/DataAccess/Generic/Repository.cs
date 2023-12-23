@@ -1,4 +1,5 @@
 ﻿using Backend.API.DataAccess.Generic;
+using Backend.API.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,10 +23,10 @@ namespace Backend.API.DataAccess.Repositories
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            dbContext.Add(entity);
+            dbContext.Set<T>().Add(entity);
             dbContext.SaveChanges();
 
-            return entity;
+            return entity; 
         }
 
         public virtual void Delete(int id)
@@ -37,6 +38,7 @@ namespace Backend.API.DataAccess.Repositories
                 dbContext.SaveChanges();
             }
         }
+
 
         public virtual List<T> GetAll()
         {
@@ -50,7 +52,7 @@ namespace Backend.API.DataAccess.Repositories
 
         public virtual T Update(T entity)
         {
-            dbContext.Entry(entity).State = EntityState.Modified;
+            dbContext.Update(entity);
             dbContext.SaveChanges();
 
             return entity;
