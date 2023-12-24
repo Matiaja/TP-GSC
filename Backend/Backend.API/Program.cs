@@ -7,7 +7,8 @@ using System.Text;
 
 var buildier = WebApplication.CreateBuilder(args);
 
-buildier.Services.AddDbContext<ProyectoDBContext>(opt => opt.UseSqlServer(buildier.Configuration.GetConnectionString("PrestamosDb")));
+buildier.Services.AddDbContext<ProyectoDBContext>(opt => 
+    opt.UseSqlServer(buildier.Configuration.GetConnectionString("PrestamosDb")));
 
 /*
 //Autenticacion

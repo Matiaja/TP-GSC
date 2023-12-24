@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.API.Migrations
 {
     [DbContext(typeof(ProyectoDBContext))]
-    [Migration("20231222153955_InitialCreate")]
+    [Migration("20231224174654_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -35,13 +35,17 @@ namespace Backend.API.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FechaActual")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("FechaActual")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Descripcion")
+                        .IsUnique();
 
                     b.ToTable("Categorias");
                 });
@@ -59,10 +63,12 @@ namespace Backend.API.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("FechaActual")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<int>("IdCategoria")
                         .HasColumnType("int");
@@ -71,16 +77,16 @@ namespace Backend.API.Migrations
 
                     b.HasIndex("CategoriaId");
 
+                    b.HasIndex("Descripcion")
+                        .IsUnique();
+
                     b.ToTable("Cosas");
                 });
 
             modelBuilder.Entity("Backend.API.Domain.Persona", b =>
                 {
                     b.Property<int>("Dni")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Dni"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -115,7 +121,9 @@ namespace Backend.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<DateTime?>("FechaRetorno")
                         .HasColumnType("datetime2");
@@ -136,6 +144,27 @@ namespace Backend.API.Migrations
                     b.HasIndex("PersonaDni");
 
                     b.ToTable("Prestamos");
+                });
+
+            modelBuilder.Entity("Backend.API.Domain.Usuario", b =>
+                {
+                    b.Property<string>("NombreUsuario")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Clave")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("NombreUsuario");
+
+                    b.ToTable("Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            NombreUsuario = "Admin",
+                            Clave = "1234"
+                        });
                 });
 
             modelBuilder.Entity("Backend.API.Domain.Cosa", b =>

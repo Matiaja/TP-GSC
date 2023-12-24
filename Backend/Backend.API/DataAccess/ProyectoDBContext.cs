@@ -11,18 +11,16 @@ namespace Backend.API.DataAccess
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Cosa> Cosas { get; set; }
         public DbSet<Prestamo> Prestamos { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
-        public ProyectoDBContext(DbContextOptions options) : base(options)
-        {
-            this.Database.EnsureCreated();
-        }
+        public ProyectoDBContext(DbContextOptions options) : base(options){}
 
-        /*
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocaldb;Database=PrestamosDb;Integrated Security=True;");
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=PrestamosDb");
         }
-        */
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Persona>(p =>
@@ -42,6 +40,23 @@ namespace Backend.API.DataAccess
                         NombreUsuario = "Admin",
                         Clave = "1234",
                     });
+            });
+
+            modelBuilder.Entity<Categoria>(c =>
+            {
+                c.HasIndex(cat => cat.Descripcion).IsUnique();
+                c.Property(cat => cat.FechaActual).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            });
+
+            modelBuilder.Entity<Cosa>(c =>
+            {
+                c.HasIndex(cosa => cosa.Descripcion).IsUnique();
+                c.Property(cosa => cosa.FechaActual).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            });
+
+            modelBuilder.Entity<Prestamo>(p =>
+            {
+                p.Property(pre => pre.Fecha).HasDefaultValueSql("CURRENT_TIMESTAMP");
             });
 
         }

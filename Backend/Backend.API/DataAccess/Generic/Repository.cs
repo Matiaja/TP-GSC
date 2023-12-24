@@ -9,53 +9,51 @@ namespace Backend.API.DataAccess.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class, new()
     {
-        private readonly ProyectoDBContext dbContext;
+
+        protected ProyectoDBContext dbcontext;
+        protected DbSet<T> DbSet;
+        //private readonly ProyectoDBContext dbContext;
 
         public Repository(ProyectoDBContext dbContext)
         {
-            this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            this.dbcontext = dbcontext;
+            this.DbSet = dbcontext.Set<T>();
         }
 
-        public virtual T Add(T entity)
+        public virtual async Task<int> Add(T t)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
+            await DbSet.AddAsync(t);
+            await dbcontext.SaveChangesAsync();
 
-            dbContext.Set<T>().Add(entity);
-            dbContext.SaveChanges();
-
-            return entity; 
+            return (int)dbcontext.Entry(t).Property("Id").CurrentValue;
+          
         }
 
-        public virtual void Delete(int id)
+        public virtual async Task Delete(int id)
         {
-            var entity = dbContext.Set<T>().Find(id);
+            var entity = await DbSet.FindAsync(id);
             if (entity != null)
             {
-                dbContext.Set<T>().Remove(entity);
-                dbContext.SaveChanges();
+                dbcontext.Remove(entity);
+                await dbcontext.SaveChangesAsync();
             }
         }
 
 
-        public virtual List<T> GetAll()
+        public virtual async Task<List<T>?> GetAll()
         {
-            return dbContext.Set<T>().ToList();
+            return await DbSet.ToListAsync();
         }
 
-        public virtual T? GetOne(int id)
+        public virtual async Task<T?> GetOne(int id)
         {
-            return dbContext.Set<T>().Find(id);
+            return await DbSet.FindAsync(id);
         }
 
-        public virtual T Update(T entity)
+        public virtual async Task Update(T t)
         {
-            dbContext.Update(entity);
-            dbContext.SaveChanges();
-
-            return entity;
+            dbcontext.Update(t);
+            await dbcontext.SaveChangesAsync();
         }
     }
 }

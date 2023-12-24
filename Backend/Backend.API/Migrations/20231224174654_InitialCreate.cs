@@ -17,8 +17,8 @@ namespace Backend.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FechaActual = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Descripcion = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FechaActual = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -29,8 +29,7 @@ namespace Backend.API.Migrations
                 name: "Personas",
                 columns: table => new
                 {
-                    Dni = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Dni = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -41,13 +40,25 @@ namespace Backend.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    NombreUsuario = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Clave = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.NombreUsuario);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cosas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FechaActual = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FechaActual = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     IdCategoria = table.Column<int>(type: "int", nullable: false),
                     CategoriaId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -68,7 +79,7 @@ namespace Backend.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     FechaRetorno = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdPersona = table.Column<int>(type: "int", nullable: false),
@@ -93,10 +104,27 @@ namespace Backend.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Usuarios",
+                columns: new[] { "NombreUsuario", "Clave" },
+                values: new object[] { "Admin", "1234" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categorias_Descripcion",
+                table: "Categorias",
+                column: "Descripcion",
+                unique: true);
+
             migrationBuilder.CreateIndex(
                 name: "IX_Cosas_CategoriaId",
                 table: "Cosas",
                 column: "CategoriaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cosas_Descripcion",
+                table: "Cosas",
+                column: "Descripcion",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Prestamos_CosaId",
@@ -114,6 +142,9 @@ namespace Backend.API.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Prestamos");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
                 name: "Cosas");
