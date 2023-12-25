@@ -36,6 +36,16 @@ namespace Backend.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Cosa>> Create(Cosa cosa)
         {
+            Categoria categoria = await this.context.Categorias.FindAsync(cosa.IdCategoria);
+
+
+            if (categoria == null)
+            {
+                return BadRequest("No se encontró la Categoria");
+            }
+
+            cosa.Categoria = categoria;
+
             this.context.Add(cosa);
             await this.context.SaveChangesAsync();
 
@@ -45,6 +55,17 @@ namespace Backend.API.Controllers
         [HttpPut]
         public async Task<ActionResult> Update(Cosa cosa)
         {
+            Categoria categoria = await this.context.Categorias.FindAsync(cosa.IdCategoria);
+
+
+            if (categoria == null)
+            {
+                return BadRequest("No se encontró la Categoria");
+            }
+
+            cosa.Categoria = categoria;
+            
+
             this.context.Update(cosa);
             await this.context.SaveChangesAsync();
             return this.NoContent();

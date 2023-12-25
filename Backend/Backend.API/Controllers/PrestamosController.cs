@@ -36,6 +36,19 @@ namespace Backend.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Prestamo>> Create(Prestamo prestamo)
         {
+
+            Cosa cosa = await this.context.Cosas.FindAsync(prestamo.IdCosa);
+
+            Persona persona = await this.context.Personas.FindAsync(prestamo.IdPersona);
+
+            if (cosa == null || persona == null)
+            {
+                return BadRequest("No se encontró la Cosa o la Persona.");
+            }
+
+            prestamo.Persona = persona;
+            prestamo.Cosa = cosa;
+
             this.context.Add(prestamo);
             await this.context.SaveChangesAsync();
 
@@ -45,6 +58,18 @@ namespace Backend.API.Controllers
         [HttpPut]
         public async Task<ActionResult> Update(Prestamo prestamo)
         {
+            Cosa cosa = await this.context.Cosas.FindAsync(prestamo.IdCosa);
+
+            Persona persona = await this.context.Personas.FindAsync(prestamo.IdPersona);
+
+            if (cosa == null || persona == null)
+            {
+                return BadRequest("No se encontró la Cosa o la Persona.");
+            }
+
+            prestamo.Persona = persona;
+            prestamo.Cosa = cosa;
+
             this.context.Update(prestamo);
             await this.context.SaveChangesAsync();
             return this.NoContent();
