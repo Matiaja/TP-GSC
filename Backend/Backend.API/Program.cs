@@ -5,12 +5,22 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.Data.Sqlite;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ProyectoDBContext>(opt => 
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("PrestamosDb")));
-
+//builder.Services.AddDbContext<ProyectoDBContext>(opt => 
+//    opt.UseSqlServer(builder.Configuration.GetConnectionString("PrestamosDb")));
+if (builder.Environment.IsEnvironment("Test"))
+{
+    builder.Services.AddDbContext<ProyectoDBContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection")));
+}
+else
+{
+    builder.Services.AddDbContext<ProyectoDBContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("PrestamosDb")));
+}
 
 builder.Services.AddGrpc();
 

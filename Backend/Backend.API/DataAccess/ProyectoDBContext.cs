@@ -13,12 +13,14 @@ namespace Backend.API.DataAccess
         public DbSet<Prestamo> Prestamos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
 
-        public ProyectoDBContext(DbContextOptions options) : base(options){}
+        public ProyectoDBContext(DbContextOptions options) : base(options){ }
 
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=PrestamosDb");
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=PrestamosDb");
+            //optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=PrestamosDb");
         }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
