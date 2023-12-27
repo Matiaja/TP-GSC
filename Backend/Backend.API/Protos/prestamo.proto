@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "Backend.API.Protos";
+
+package GrpcService;
+
+service PrestamoService {
+	rpc CambiarEstado (CambiarEstadoPrestamoRequest) returns (PrestamoResponse);
+}
+
+message CambiarEstadoPrestamoRequest {
+    string id = 1;
+}
+
+message PrestamoResponse {
+	string message = 1;
+}

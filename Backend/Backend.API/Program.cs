@@ -1,14 +1,40 @@
 using Backend.API.DataAccess;
 using Backend.API.Domain;
+using Backend.API.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-var buildier = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-buildier.Services.AddDbContext<ProyectoDBContext>(opt => 
-    opt.UseSqlServer(buildier.Configuration.GetConnectionString("PrestamosDb")));
+builder.Services.AddDbContext<ProyectoDBContext>(opt => 
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("PrestamosDb")));
+
+
+builder.Services.AddGrpc();
+
+builder.Services
+    .AddEndpointsApiExplorer()
+    .AddSwaggerGen();
+
+builder.Services.AddControllers();
+
+builder.Services.AddGrpc(opt => opt.EnableDetailedErrors = true);
+builder.Services.AddGrpcReflection();
+
+var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.MapControllers();
+
+app.MapGrpcService<PrestamoServices>();
+
+app.MapGrpcReflectionService();
+
+app.Run();
 
 /*
 //Autenticacion
@@ -23,40 +49,4 @@ buildier.Services
     });
 */
 
-buildier.Services
-    .AddEndpointsApiExplorer()
-    .AddSwaggerGen();
-
-buildier.Services.AddControllers();
-
-var app = buildier.Build();
-
-app.UseSwagger();
-app.UseSwaggerUI();
-
 //app.UseAuthentication();
-
-app.MapControllers();
-
-app.Run();
-
-
-//using hace que se llame automaticamente al dispose
-//using var context = new ProyectoDBContext();
-
-//var categorias = await context.Categorias.ToListAsync();
-
-/*
-
-WriteToConsole(categorias);
-
-static void WriteToConsole(IEnumerable<Categoria> categorias)
-{
-    foreach (Categoria categoria in categorias)
-    {
-        string json = System.Text.Json.JsonSerializer.Serialize(categoria);
-        Console.WriteLine(json);
-    }
-}
-
-*/

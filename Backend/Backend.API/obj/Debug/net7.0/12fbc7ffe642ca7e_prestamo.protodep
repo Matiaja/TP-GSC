@@ -1,0 +1,2 @@
+obj\Debug\net7.0\Protos/Prestamo.cs \
+obj\Debug\net7.0\Protos/PrestamoGrpc.cs: Protos/prestamo.proto

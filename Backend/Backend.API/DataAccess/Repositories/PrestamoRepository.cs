@@ -7,5 +7,7 @@ namespace Backend.API.DataAccess.Repositories
         public PrestamoRepository(ProyectoDBContext dbContext) : base(dbContext)
         {
         }
+
+        public async Task CambiarEstado(Prestamo prestamo) { }
     }
 }
