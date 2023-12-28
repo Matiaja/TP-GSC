@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Data.Sqlite;
+using Microsoft.Net.Http.Headers;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddDbContext<ProyectoDBContext>(opt => 
-//    opt.UseSqlServer(builder.Configuration.GetConnectionString("PrestamosDb")));
 if (builder.Environment.IsEnvironment("Test"))
 {
     builder.Services.AddDbContext<ProyectoDBContext>(options =>
@@ -25,8 +25,38 @@ else
 builder.Services.AddGrpc();
 
 builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(opt => opt.TokenValidationParameters = new TokenValidationParameters()
+    {
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ClaveDeSeguridadConUnMínimoDe256Bits")),
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        ValidateIssuerSigningKey = true
+    });
+
+builder.Services
     .AddEndpointsApiExplorer()
-    .AddSwaggerGen();
+    .AddSwaggerGen(opt =>
+    {
+        opt.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme()
+        {
+            In = ParameterLocation.Header,
+            Name = HeaderNames.Authorization,
+            Scheme = JwtBearerDefaults.AuthenticationScheme
+        });
+
+        opt.AddSecurityRequirement(new OpenApiSecurityRequirement()
+        {
+            [new OpenApiSecurityScheme()
+            {
+                Reference = new OpenApiReference()
+                {
+                    Id = JwtBearerDefaults.AuthenticationScheme,
+                    Type = ReferenceType.SecurityScheme
+                }
+            }] = Array.Empty<string>()
+        });
+    });
 
 builder.Services.AddControllers();
 
@@ -45,18 +75,3 @@ app.MapGrpcService<PrestamoServices>();
 app.MapGrpcReflectionService();
 
 app.Run();
-
-/*
-//Autenticacion
-buildier.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(opt => opt.TokenValidationParameters = new TokenValidationParameters()
-    {
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ClaveDeSeguridadConUnMinimoDe256Bits")),
-        ValidateAudience = false,
-        ValidateIssuer = false,
-        ValidateIssuerSigningKey = true
-    });
-*/
-
-//app.UseAuthentication();
