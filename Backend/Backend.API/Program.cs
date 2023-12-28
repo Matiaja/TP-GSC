@@ -26,36 +26,51 @@ builder.Services.AddGrpc();
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(opt => opt.TokenValidationParameters = new TokenValidationParameters()
+    .AddJwtBearer(options =>
     {
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ClaveDeSeguridadConUnMínimoDe256Bits")),
-        ValidateAudience = false,
-        ValidateIssuer = false,
-        ValidateIssuerSigningKey = true
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ClaveDeSeguridadConUnMínimoDe256Bits")),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ClockSkew = TimeSpan.Zero,
+            RequireExpirationTime = true,
+            ValidateLifetime = true,
+        };
     });
+
+builder.Services.AddCors(options => options.AddPolicy("FrontEnd", policy => 
+{
+    policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+}));
 
 builder.Services
     .AddEndpointsApiExplorer()
-    .AddSwaggerGen(opt =>
+    .AddSwaggerGen(options =>
     {
-        opt.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme()
+        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             In = ParameterLocation.Header,
-            Name = HeaderNames.Authorization,
-            Scheme = JwtBearerDefaults.AuthenticationScheme
+            Description = "Please enter into field the word 'Bearer' followed by a space and the JWT value",
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey
+        });
+        options.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                new string[] { }
+            }
         });
 
-        opt.AddSecurityRequirement(new OpenApiSecurityRequirement()
-        {
-            [new OpenApiSecurityScheme()
-            {
-                Reference = new OpenApiReference()
-                {
-                    Id = JwtBearerDefaults.AuthenticationScheme,
-                    Type = ReferenceType.SecurityScheme
-                }
-            }] = Array.Empty<string>()
-        });
     });
 
 builder.Services.AddControllers();
@@ -65,8 +80,11 @@ builder.Services.AddGrpcReflection();
 
 var app = builder.Build();
 
+app.UseCors("FrontEnd");
+
 app.UseSwagger();
 app.UseSwaggerUI();
+
 
 app.MapControllers();
 

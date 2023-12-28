@@ -16,6 +16,9 @@ namespace Backend.API.Controllers
         [HttpPost("login")]
         public ActionResult Login([FromBody] Usuario usuario)
         {
+            if (usuario.NombreUsuario != "Admin" || usuario.Clave != "1234")
+                return Unauthorized();
+
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ClaveDeSeguridadConUnMínimoDe256Bits"));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 

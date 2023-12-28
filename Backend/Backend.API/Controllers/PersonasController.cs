@@ -1,5 +1,6 @@
 ﻿using Backend.API.DataAccess;
 using Backend.API.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace Backend.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class PersonasController : ControllerBase
     {
         private readonly ProyectoDBContext context;
