@@ -11,6 +11,15 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy(
+        "AllowOrigin",
+        builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+    );
+});
+
 if (builder.Environment.IsEnvironment("Test"))
 {
     builder.Services.AddDbContext<ProyectoDBContext>(options =>
@@ -40,10 +49,6 @@ builder.Services
         };
     });
 
-builder.Services.AddCors(options => options.AddPolicy("FrontEnd", policy => 
-{
-    policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
-}));
 
 builder.Services
     .AddEndpointsApiExplorer()
@@ -80,7 +85,7 @@ builder.Services.AddGrpcReflection();
 
 var app = builder.Build();
 
-app.UseCors("FrontEnd");
+app.UseCors("AllowOrigin");
 
 app.UseSwagger();
 app.UseSwaggerUI();

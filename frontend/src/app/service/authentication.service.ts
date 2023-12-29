@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, switchMap, throwError} from 'rxjs';
+import { Observable, catchError, switchMap, throwError} from 'rxjs';
 import { UsuarioService } from './usuario.service';
 import { Persona } from '../models/persona';
 
@@ -24,6 +24,11 @@ export class AutenticacionService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.get<Persona[]>(this.apiUrl, { headers });
+    return this.http.get<Persona[]>(this.apiUrl, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error al obtener personas:', error);
+        return throwError('Error al obtener personas');
+      })
+    );
 }
 }

@@ -1,47 +1,79 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-image: url('../../img/imagen_para_app.avif');
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  margin: 0;
+}
+
+.center-container {
+  text-align: center;
+  width: 100%;
+}
+
+.container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 150px; /* Ajustar el ancho según sea necesario */
+  max-width: 100%;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
 .login-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-  }
-  
-  button {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px; /* Añadido para ajustar el margen del botón */
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  hr {
-    border: 1px solid #ccc;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
+  width: 100%;
+}
+
+.table-container {
+  margin-top: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.spaced-table th, .spaced-table td {
+  padding: 12px;
+}
+
+.update-button, .delete-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.create-person-button {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.update-button:disabled, .delete-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}

@@ -1,37 +1,66 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Persona } from '../models/persona';
+import { PersonasService } from '../service/personas.service';
 
 @Component({
   selector: 'app-personas',
   templateUrl: './personas.component.html',
   styleUrls: ['./personas.component.css']
 })
-export class PersonasComponent {
+export class PersonasComponent implements OnInit {
 
-  personas: Persona[] = []
+  personas: Persona[] = [];
+
+  constructor(private personasService: PersonasService) {}
 
   ngOnInit(): void {
-        this.datosHasheados();
+    this.obtenerPersonas();
   }
 
-  datosHasheados() {
-    this.personas = [
-      new Persona(111222333, 'Juan Pérez', '555111111', 'juan.perez@gmail.com'),
-      new Persona(444555666, 'María Rodríguez', '555222222', 'maria.rodriguez@gmail.com'),
-      new Persona(777888999, 'Carlos Gómez', '555333333', 'carlos.gomez@gmail.com'),
-    ];
-  }
-  
-
-  borrarPersona(_t18: any) {
-    throw new Error('Method not implemented.');
-  }
-  actualizarPersona(_t18: any) {
-    throw new Error('Method not implemented.');
+  obtenerPersonas() {
+    this.personasService.getPersonas().subscribe(
+      (data) => {
+        this.personas = data;
+      },
+      (error) => {
+        console.error('Error al obtener personas:', error);
+      }
+    );
   }
 
-  crearNuevaPersona() {
-    throw new Error('Method not implemented.');
+  borrarPersona(id: number) {
+    this.personasService.eliminarPersona(id).subscribe(
+      () => {
+        console.log('Persona eliminada correctamente');
+        this.obtenerPersonas(); 
+      },
+      (error) => {
+        console.error('Error al eliminar persona:', error);
+      }
+    );
   }
 
+  actualizarPersona(persona: Persona) {
+    this.personasService.actualizarPersona(persona).subscribe(
+      () => {
+        console.log('Persona actualizada correctamente');
+      },
+      (error) => {
+        console.error('Error al actualizar persona:', error);
+      }
+    );
+  }
+
+  crearNuevaPersona(persona: Persona) {
+    this.personasService.crearPersona(persona).subscribe(
+      () => {
+        console.log('Nueva persona creada correctamente');
+        this.obtenerPersonas();
+      },
+      (error) => {
+        console.error('Error al crear nueva persona:', error);
+      }
+    );
+  }
 }
+

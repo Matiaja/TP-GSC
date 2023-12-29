@@ -1,17 +1,18 @@
 <div class="center-container">
-    <div class="container login-container">
-      <h2>Welcome</h2>
-  
-      <button class="create-person-button" (click)="crearNuevaPersona()">Crear Persona</button>
-  
+  <div class="container login-container">
+    <h2>Bienvenido!</h2>
+
+    <button class="create-person-button" >Crear Persona</button>
+
+    <div class="table-container">
       <table class="table spaced-table">
         <thead>
           <tr>
             <th>DNI</th>
-            <th>Name</th>
-            <th>Phone Number</th>
-            <th>Email Address</th>
-            <th>Actions</th>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Correo Electrónico</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -21,12 +22,12 @@
             <td>{{ persona.telefono }}</td>
             <td>{{ persona.email }}</td>
             <td>
-              <button (click)="actualizarPersona(persona)">Update</button>
-              <button (click)="borrarPersona(persona)">Delete</button>
+              <button class="update-button" (click)="actualizarPersona(persona)">Actualizar</button>
+              <button class="delete-button" (click)="borrarPersona(persona.dni)">Borrar</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-  
+</div>

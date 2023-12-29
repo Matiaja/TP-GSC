@@ -10,7 +10,7 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
-  private apiUrl = "https://localhost:7063/api/Accounts/login";
+  private apiUrl = "https://localhost:7063/api/Acounts/login";
 
   public getToken(usuario: Usuario): Observable<string> {
     const credentials = { nombreUsuario: usuario.nombreUsuario, clave: usuario.clave };
