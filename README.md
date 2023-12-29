@@ -42,4 +42,4 @@ Opcional
 Para el uso del login en frontend, el usuario es Admin y la clave es 1234
 
 ## Experiencia personal durante el curso
-La verdad que el curso me parecio muy útil, aprendi muchisimas tecnologias que no conocía y reforcé conocimientos previos, realmente fue una experiencia maravillosa y eso es en gran parte a los profes que nos dieron la capacitacion, compartiendo sus experiencias y sus conocimientos, y estuvieron siempre a disposición para nosotros estoy muy agradecido con lo aprendido en el curso, asi que agradezco tanto Walter, como Beto en Backend y Luciano en Frontend, realmente un curso muy recomendable y muy interesante.
+La verdad que el curso me parecio muy útil, aprendi muchisimas tecnologias que no conocía y reforcé conocimientos previos, realmente fue una experiencia maravillosa y eso es en gran parte a los profes que nos dieron la capacitacion, compartiendo sus experiencias y sus conocimientos, y estuvieron siempre a disposición para nosotros, asi que estoy muy agradecido tanto con Walter, como Beto por las clases de Backend y Luciano por las clases de Frontend, realmente un curso muy recomendable y muy interesante.
