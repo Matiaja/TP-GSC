@@ -1,0 +1,32 @@
+<div class="center-container">
+    <div class="container login-container">
+      <h2>Welcome</h2>
+  
+      <button class="create-person-button" (click)="crearNuevaPersona()">Crear Persona</button>
+  
+      <table class="table spaced-table">
+        <thead>
+          <tr>
+            <th>DNI</th>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Email Address</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let persona of personas">
+            <td>{{ persona.dni }}</td>
+            <td>{{ persona.nombre }}</td>
+            <td>{{ persona.telefono }}</td>
+            <td>{{ persona.email }}</td>
+            <td>
+              <button (click)="actualizarPersona(persona)">Update</button>
+              <button (click)="borrarPersona(persona)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

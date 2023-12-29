@@ -1,34 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Login } from '../models/login';
-import { Observable, tap } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
-import { JwtAuth } from '../models/jwtAuth';
+import { Observable, switchMap, throwError} from 'rxjs';
+import { UsuarioService } from './usuario.service';
+import { Persona } from '../models/persona';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
-  loginUrl = "Acounts/login"
-  personaUrl = "Personas"
+export class AutenticacionService {
 
+  constructor(private http: HttpClient, private us: UsuarioService) {}
 
-  public getToken(): string | null {
-    return localStorage.getItem('jwtToken');
-  }
+  private apiUrl = "https://localhost:7063/api/personas"
 
-  constructor(private http: HttpClient) { }
+  public getPersonas(): Observable<Persona[]> {
+    const token = localStorage.getItem('token');
 
-  public login(user: Login): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/${this.loginUrl}`, user, { responseType: 'text' });
-  }
+    if (!token) {
+      return throwError(() => 'Token no disponible');
+    }
 
-  public getPersonas(): Observable<any> {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.getToken(),
+      Authorization: `Bearer ${token}`,
     });
-  
-    return this.http.get<any>(`${environment.apiUrl}/${this.personaUrl}`, { headers: headers });
-  }
+
+    return this.http.get<Persona[]>(this.apiUrl, { headers });
+}
 }

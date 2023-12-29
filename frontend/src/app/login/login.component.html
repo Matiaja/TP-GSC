@@ -1,0 +1,55 @@
+<div class="center-container">
+    <form class="container" [formGroup]="formularioLogin">
+      <h2>Welcome!</h2>
+  
+      <div class="form-group">
+        <label>Username: </label>
+        <input
+          class="input-field"
+          type="text"
+          formControlName="usuario" 
+          [ngClass]="{
+            errorCSS:
+              formularioLogin.get('usuario')?.touched &&
+              formularioLogin.get('usuario')?.value === ''
+          }"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label>Password: </label>
+        <input
+          class="input-field"
+          type="password"
+          formControlName="clave" 
+          [ngClass]="{
+            errorCSS:
+              formularioLogin.get('clave')?.touched &&
+              formularioLogin.get('clave')?.value === ''
+          }"
+        />
+      </div>
+  
+      <div align="center">
+        <button
+          (click)="submit()"
+          [disabled]="formularioLogin.invalid"
+        >
+          Login
+        </button>
+      </div>
+  
+      <p
+        align="center"
+        style="color: red"
+        *ngIf="
+          formularioLogin.get('usuario')?.touched &&
+          formularioLogin.get('clave')?.touched &&
+          (formularioLogin.get('usuario')?.value === '' ||
+            formularioLogin.get('clave')?.value === '')
+        "
+      >
+        Please fill in all the fields in the form.
+      </p>
+    </form>
+  </div> 
