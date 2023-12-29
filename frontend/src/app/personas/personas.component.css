@@ -23,7 +23,7 @@ body {
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  width: 150px; /* Ajustar el ancho según sea necesario */
+  width: 300px;
   max-width: 100%;
   margin: 0 auto;
   margin-top: 50px;
@@ -31,6 +31,38 @@ body {
 
 .login-container {
   width: 100%;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-container .form-row label {
+  margin-right: 10px;
+  width: 20px;
+}
+
+.form-container .form-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.form-container .form-row label {
+  margin-right: 50px;
+  width: 120px;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .table-container {
@@ -70,10 +102,14 @@ body {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .update-button:disabled, .delete-button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+}
+
+.create-person-button:disabled {
+  background-color: #cccccc;
 }

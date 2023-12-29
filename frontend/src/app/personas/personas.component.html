@@ -2,21 +2,54 @@
   <div class="container login-container">
     <h2>Bienvenido!</h2>
 
-    <form (submit)="crearNuevaPersona()">
-      <label for="dni">DNI:</label>
-      <input type="text" id="dni" [(ngModel)]="nuevaPersona.dni" required>
-
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" [(ngModel)]="nuevaPersona.nombre" required>
-
-      <label for="telefono">Teléfono:</label>
-      <input type="text" id="telefono" [(ngModel)]="nuevaPersona.telefono" required>
-
-      <label for="email">Correo Electrónico:</label>
-      <input type="text" id="email" [(ngModel)]="nuevaPersona.email" required>
-
-      <button type="submit" class="create-person-button">Crear Persona</button>
+    <form (submit)="crearNuevaPersona()" class="form-container">
+      <div class="form-row">
+        <label for="dni">DNI:</label>
+        <input type="text" id="dni" [(ngModel)]="nuevaPersona.dni" required>
+      </div>
+    
+      <div class="form-row">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" [(ngModel)]="nuevaPersona.nombre" required>
+      </div>
+    
+      <div class="form-row">
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" [(ngModel)]="nuevaPersona.telefono" required>
+      </div>
+    
+      <div class="form-row">
+        <label for="email">Correo Electrónico:</label>
+        <input type="text" id="email" [(ngModel)]="nuevaPersona.email" required>
+      </div>
+    
+      <button type="submit" class="create-person-button" [disabled]="!camposCompletos()">Crear Persona</button>
     </form>
+
+    <div *ngIf="personaSeleccionada" class="form-container">
+      <h3>Editar Persona</h3>
+      <div class="form-row">
+        <label for="edit-dni">DNI:</label>
+        <input type="text" id="edit-dni" [(ngModel)]="personaSeleccionada.dni" required>
+      </div>
+
+      <div class="form-row">
+        <label for="edit-nombre">Nombre:</label>
+        <input type="text" id="edit-nombre" [(ngModel)]="personaSeleccionada.nombre" required>
+      </div>
+
+      <div class="form-row">
+        <label for="edit-telefono">Teléfono:</label>
+        <input type="text" id="edit-telefono" [(ngModel)]="personaSeleccionada.telefono" required>
+      </div>
+
+      <div class="form-row">
+        <label for="edit-email">Correo Electrónico:</label>
+        <input type="text" id="edit-email" [(ngModel)]="personaSeleccionada.email" required>
+      </div>
+
+      <button type="button" class="update-button" (click)="guardarCambios()" [disabled]="!camposCompletosUpdate()">Guardar Cambios</button>
+    </div>
 
     <div class="table-container">
       <table class="table spaced-table">
@@ -36,12 +69,15 @@
             <td>{{ persona.telefono }}</td>
             <td>{{ persona.email }}</td>
             <td>
-              <button class="update-button" (click)="actualizarPersona(persona)">Actualizar</button>
+              <button class="update-button" (click)="editarPersona(persona)">Editar</button>
               <button class="delete-button" (click)="borrarPersona(persona.dni)">Borrar</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    
   </div>
 </div>
+
