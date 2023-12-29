@@ -1,54 +1,38 @@
-<div class="center-container">
-  <form class="container" [formGroup]="formularioLogin">
-    <h2>Inicio de sesion</h2>
+<div class="container mt-5">
+  <form [formGroup]="formularioLogin">
+    <h2 class="mb-4">Inicio de sesión</h2>
 
     <div class="form-group">
-      <label>Nombre de usuario: </label>
+      <label for="usuario">Nombre de usuario:</label>
       <input
-        class="input-field"
+        id="usuario"
+        class="form-control input-field"
         type="text"
-        formControlName="usuario" 
-        [ngClass]="{
-          errorCSS:
-            formularioLogin.get('usuario')?.touched &&
-            formularioLogin.get('usuario')?.value === ''
-        }"
+        formControlName="usuario"
       />
+      <div class="invalid-feedback" *ngIf="formularioLogin.get('usuario')?.invalid && formularioLogin.get('usuario')?.touched">
+        Por favor, ingrese un nombre de usuario.
+      </div>
     </div>
 
     <div class="form-group">
-      <label>Contraseña: </label>
+      <label for="clave">Contraseña:</label>
       <input
-        class="input-field"
+        id="clave"
+        class="form-control input-field"
         type="password"
-        formControlName="clave" 
-        [ngClass]="{
-          errorCSS:
-            formularioLogin.get('clave')?.touched &&
-            formularioLogin.get('clave')?.value === ''
-        }"
+        formControlName="clave"
       />
+      <div class="invalid-feedback" *ngIf="formularioLogin.get('clave')?.invalid && formularioLogin.get('clave')?.touched">
+        Por favor, ingrese una contraseña.
+      </div>
     </div>
 
-    <div align="center">
-      <button
-        (click)="submit()"
-        [disabled]="formularioLogin.invalid"
-      >
-        Iniciar Sesión
-      </button>
-    </div>
+    <button class="btn btn-success" (click)="submit()" [disabled]="formularioLogin.invalid">
+      Iniciar Sesión
+    </button>
 
-    <p
-      align="center"
-      style="color: red"
-      *ngIf="
-        formularioLogin.get('usuario')?.touched &&
-        formularioLogin.get('clave')?.touched &&
-        (formularioLogin.get('usuario')?.value === '' ||
-          formularioLogin.get('clave')?.value === '')
-      "
-    >
+    <p class="mt-3" *ngIf="formularioLogin.invalid && formularioLogin.touched">
       Por favor, complete todos los campos del formulario.
     </p>
   </form>

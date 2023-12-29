@@ -59,6 +59,7 @@ namespace Backend.API.DataAccess
             modelBuilder.Entity<Prestamo>(p =>
             {
                 p.Property(pre => pre.Fecha).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                p.Property(pre => pre.Estado).HasDefaultValue("Pendiente de devolucion");
             });
 
         }
