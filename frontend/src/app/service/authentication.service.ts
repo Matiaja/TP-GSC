@@ -1,28 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, switchMap, throwError} from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 import { UsuarioService } from './usuario.service';
 import { Persona } from '../models/persona';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AutenticacionService {
 
-  constructor(private http: HttpClient, private us: UsuarioService) {}
+  private apiUrl = "https://localhost:7063/api/Personas";
 
-  private apiUrl = "https://localhost:7063/api/personas"
+  constructor(private http: HttpClient, private usuarioService: UsuarioService) {}
 
-  public getPersonas(): Observable<Persona[]> {
-    const token = localStorage.getItem('token');
+  private obtenerEncabezados(): HttpHeaders {
+    const token = this.usuarioService.obtenerTokenAlmacenado();
 
     if (!token) {
-      return throwError(() => 'Token no disponible');
+      throw new Error('Token no disponible');
     }
 
-    const headers = new HttpHeaders({
+    return new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
+  }
+
+  public obtenerPersonas(): Observable<Persona[]> {
+    const headers = this.obtenerEncabezados();
 
     return this.http.get<Persona[]>(this.apiUrl, { headers }).pipe(
       catchError((error) => {
@@ -32,3 +37,4 @@ export class AutenticacionService {
     );
 }
 }
+

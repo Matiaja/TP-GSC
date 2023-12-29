@@ -1,8 +1,8 @@
 export class Persona {
     constructor(
-      public dni: number,
-      public nombre: string,
-      public telefono: string,
-      public email: string
+      public dni: number = 0,
+    public nombre: string = '',
+    public telefono: string = '',
+    public email: string = ''
     ) {}
   }

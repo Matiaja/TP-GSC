@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PersonasComponent } from './personas/personas.component';
 import { ErrorComponent } from './error/error.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, ErrorComponent, PersonasComponent],
@@ -15,6 +16,7 @@ import { ErrorComponent } from './error/error.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Persona } from '../models/persona';
 import { PersonasService } from '../service/personas.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-personas',
@@ -8,8 +9,8 @@ import { PersonasService } from '../service/personas.service';
   styleUrls: ['./personas.component.css']
 })
 export class PersonasComponent implements OnInit {
-
   personas: Persona[] = [];
+  nuevaPersona: Persona = new Persona(); // Objeto para la nueva persona
 
   constructor(private personasService: PersonasService) {}
 
@@ -51,11 +52,13 @@ export class PersonasComponent implements OnInit {
     );
   }
 
-  crearNuevaPersona(persona: Persona) {
-    this.personasService.crearPersona(persona).subscribe(
+  crearNuevaPersona() {
+    this.personasService.crearPersona(this.nuevaPersona).subscribe(
       () => {
         console.log('Nueva persona creada correctamente');
         this.obtenerPersonas();
+        // Limpiar los campos del formulario después de la creación
+        this.nuevaPersona = new Persona();
       },
       (error) => {
         console.error('Error al crear nueva persona:', error);
